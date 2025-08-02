@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Scanner</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .device { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+        .device h3 { margin: 0 0 10px; }
+    </style>
+</head>
+<body>
+    <h1>Simple Network Scanner (Web GUI)</h1>
+    <form method="POST">
+        <label>IP Range (e.g. 192.168.0.0/24):</label><br>
+        <input type="text" name="ip_range" required style="width: 300px;"><br><br>
+        <input type="submit" value="Start Scan">
+    </form>
+
+    {% if results %}
+        <h2>Scan Results:</h2>
+        {% for device in results %}
+            <div class="device">
+                <h3>{{ device.ip }}</h3>
+                <p>MAC Address: {{ device.mac }}</p>
+                <p>Open Ports: 
+                    {% if device.ports %}
+                        {{ device.ports | join(', ') }}
+                    {% else %}
+                        None
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
